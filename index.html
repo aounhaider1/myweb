@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MASportswear - Move with Energy</title>
+
+  <!-- Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Open+Sans:wght@400;600&display=swap"
+    rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+
+  <!-- Vuetify CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@3.4.0/dist/vuetify.min.css" rel="stylesheet">
+
+  <style>
+    /* Custom Styles for Freshness */
+    body {
+      font-family: 'Open Sans', sans-serif;
+    }
+
+    .brand-font {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .hero-section {
+      background: linear-gradient(135deg, #FFF3E0 0%, #E8F5E9 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Abstract shapes for background interest */
+    .shape-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      z-index: 0;
+    }
+
+    .blob-1 {
+      top: -10%;
+      right: -10%;
+      width: 500px;
+      height: 500px;
+      background-color: rgba(255, 152, 0, 0.15);
+    }
+
+    .blob-2 {
+      bottom: -10%;
+      left: -10%;
+      width: 400px;
+      height: 400px;
+      background-color: rgba(76, 175, 80, 0.15);
+    }
+
+    .product-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .product-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15) !important;
+    }
+
+    .cta-btn {
+      letter-spacing: 1px;
+      font-weight: 700;
+    }
+
+    /* Helper for text overlay on images */
+    .text-shadow {
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    <v-app>
+      <!-- Navigation -->
+      <v-app-bar :elevation="scrolled ? 2 : 0" :color="scrolled ? 'white' : 'transparent'" fixed app theme="light">
+        <v-container class="d-flex align-center py-0" ->
+          <v-app-bar-title class="brand-font text-h5 flex-row">
+            <span class="text-orange-darken-2">MA</span><span class="text-green-darken-2">Sportswear</span>
+          </v-app-bar-title>
+
+          <v-spacer></v-spacer>
+
+          <div class="d-none d-md-flex justify-end mr-14">
+            <v-btn variant="text" color="grey-darken-3">T-Shirts</v-btn>
+            <v-btn variant="text" color="grey-darken-3">Jackets</v-btn>
+            <v-btn variant="text" color="grey-darken-3">Accessorises</v-btn>
+          </div>
+        </v-container>
+      </v-app-bar>
+
+      <!-- Mobile Menu -->
+      <v-navigation-drawer v-model="drawer" temporary location="right">
+        <v-list>
+          <v-list-item title="Men" link></v-list-item>
+          <v-list-item title="Women" link></v-list-item>
+          <v-list-item title="Collections" link></v-list-item>
+          <v-list-item title="Sale" link class="text-red"></v-list-item>
+        </v-list>
+      </v-navigation-drawer>
+
+      <v-main class="pt-0">
+        <!-- Hero Section -->
+        <section class="hero-section d-flex align-center" style="min-height: 90vh;">
+          <div class="shape-blob blob-1"></div>
+          <div class="shape-blob blob-2"></div>
+
+          <v-container class="position-relative" style="z-index: 1;">
+            <v-row align="center">
+              <v-col cols="12" md="6">
+                <v-chip color="orange-darken-2" variant="tonal" class="mb-4 font-weight-bold" label>
+                  SUMMER STYLES
+                </v-chip>
+                <h1 class="text-h2 text-md-h1 brand-font font-weight-black mb-4 text-blue-grey-darken-4">
+                  IGNITE YOUR <br>
+                  <span class="text-orange-darken-1">ADVENTURE</span>
+                </h1>
+                <p class="text-body-1 text-grey-darken-2 mb-8 pr-md-10" style="max-width: 500px; line-height: 1.8;">
+                  Designed for performance, with nature in mind. Experience the perfect balance of sustainable
+                  materials, comfort and durability.
+                </p>
+                <div class="d-flex align-center mt-12">
+                  <div class="d-flex mr-6">
+                    <v-icon color="green" icon="mdi-leaf" class="mr-2"></v-icon>
+                    <span class="text-caption font-weight-bold">Eco-Friendly</span>
+                  </div>
+                  <div class="d-flex mr-6">
+                    <v-icon color="blue" icon="mdi-weather-windy" class="mr-2"></v-icon>
+                    <span class="text-caption font-weight-bold">Breathable</span>
+                  </div>
+                  <div class="d-flex">
+                    <v-icon color="orange" icon="mdi-flash" class="mr-2"></v-icon>
+                    <span class="text-caption font-weight-bold">High Impact</span>
+                  </div>
+                </div>
+              </v-col>
+              <v-col cols="12" md="6" class="text-center">
+                <!-- Placeholder for a dynamic hero image -->
+                <!-- In a real app, this would be a high-res transparent PNG of a runner -->
+                <v-img
+                  src="https://images.unsplash.com/photo-1517466787929-bc90951d0974?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                  class="rounded-xl elevation-10 mx-auto" max-width="500" aspect-ratio="0.8" cover></v-img>
+              </v-col>
+            </v-row>
+          </v-container>
+        </section>
+
+        <!-- Featured Categories -->
+        <section class="py-16 bg-white">
+          <v-container>
+            <v-row class="mb-8">
+              <v-col class="text-center">
+                <h2 class="text-h3 brand-font text-blue-grey-darken-4">Curated For You</h2>
+                <div class="mx-auto mt-2 bg-orange-darken-1" style="width: 60px; height: 4px; border-radius: 2px;">
+                </div>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col v-for="(cat, i) in categories" :key="i" cols="12" md="4">
+                <v-card class="product-card rounded-lg border-0 position-relative overflow-hidden" height="400">
+                  <v-img :src="cat.image" height="100%" cover class="align-end gradient-overlay">
+                    <div class="fill-height d-flex flex-column justify-end p-6"
+                      style="background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);">
+                      <div class="pa-6">
+                        <h3 class="text-h4 text-white font-weight-bold mb-2">{{ cat.title }}</h3>
+                        <v-btn variant="text" color="white" class="px-0">
+                          Explore <v-icon icon="mdi-arrow-right" class="ml-2"></v-icon>
+                        </v-btn>
+                      </div>
+                    </div>
+                  </v-img>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-container>
+        </section>
+
+        <!-- Newsletter / CTA -->
+        <section class="py-16 bg-blue-grey-darken-4 text-white">
+          <v-container>
+            <v-row align="center" justify="center">
+              <v-col cols="12" md="8" class="text-center">
+                <v-icon icon="mdi-email-outline" size="48" color="green-accent-3" class="mb-4"></v-icon>
+                <h2 class="text-h3 brand-font mb-4">Order your first kit today</h2>
+                <p class="text-grey-lighten-1 mb-8">
+                  We design your products together with you. Write us an Email and we can arrange a video chat or an
+                  in-person meeting (in Frankfurt region) to discuss your needs.
+                </p>
+                <v-form @submit.prevent="subscribe">
+                  <v-row justify="center">
+                    <v-col cols="12" md="8">
+                      <v-btn color="orange-darken-1" rounded="pill" class="px-6">
+                        <a href="mailto:order@masportswear.com?subject=Sportswear Order Inquiry&body=Hello,%0D%0A%0D%0AI would like to place an order and request more information about your products.%0D%0APlease contact me at your earliest convenience.%0D%0A%0D%0AThank you."
+                          style="text-decoration:none;border-radius:6px;font-weight:bold;">
+                          Write us!
+                        </a>
+                      </v-btn>
+                    </v-col>
+                  </v-row>
+                </v-form>
+              </v-col>
+            </v-row>
+          </v-container>
+        </section>
+      </v-main>
+
+      <!-- Footer -->
+      <v-footer color="white" class="pt-16 pb-8 border-top">
+        <v-container>
+          <v-row>
+            <v-col cols="12" md="4">
+              <h3 class="brand-font text-h5">
+                <span class="text-orange-darken-2">MA</span><span class="text-green-darken-2">Sportswear</span>
+              </h3>
+              <p class="text-grey-darken-1 mb-6" style="max-width: 300px;">
+                Empowering athletes with sustainable, high-performance gear designed for the modern world.
+              </p>
+            </v-col>
+            <v-col cols="12" md="4">
+              <h4 class="font-weight-bold mb-4">Contact Us</h4>
+              <div class="d-flex align-center text-grey-darken-1">
+                <v-icon icon="mdi-email" class="mr-2" size="small"></v-icon>
+                support@masportswear.com
+              </div>
+            </v-col>
+            <v-col cols="12" md="4">
+              <h4 class="font-weight-bold mb-4">Follow Us</h4>
+              <div class="d-flex align-center text-grey-darken-1">
+                <a href="https://www.instagram.com/ma.sports.wear/">
+                  <v-icon icon="mdi-instagram" variant="text" color="grey-darken-2"></v-icon>
+                </a>
+              </div>
+            </v-col>
+          </v-row>
+          <v-divider class="my-8"></v-divider>
+          <div class="text-center text-caption text-grey">
+            &copy; {{ new Date().getFullYear() }} MASportswear. All rights reserved.
+          </div>
+        </v-container>
+      </v-footer>
+
+      <!-- Snackbar for interactions -->
+      <v-snackbar v-model="snackbar" :color="snackbarColor" timeout="3000">
+        {{ snackbarText }}
+        <template v-slot:actions>
+          <v-btn variant="text" @click="snackbar = false">Close</v-btn>
+        </template>
+      </v-snackbar>
+    </v-app>
+  </div>
+
+  <!-- Vue 3 CDN -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <!-- Vuetify 3 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@3.4.0/dist/vuetify.min.js"></script>
+
+  <script>
+    const { createApp, ref, onMounted, onUnmounted } = Vue;
+    const { createVuetify } = Vuetify;
+
+    const vuetify = createVuetify({
+      theme: {
+        defaultTheme: 'light',
+        themes: {
+          light: {
+            colors: {
+              primary: '#FB8C00', // Orange Darken 1
+              secondary: '#388E3C', // Green Darken 2
+              accent: '#F57C00',
+              error: '#FF5252',
+              info: '#2196F3',
+              success: '#4CAF50',
+              warning: '#FFC107',
+            }
+          }
+        }
+      }
+    });
+
+    const app = createApp({
+      setup() {
+        const drawer = ref(false);
+        const scrolled = ref(false);
+        const email = ref('');
+        const snackbar = ref(false);
+        const snackbarText = ref('');
+        const snackbarColor = ref('success');
+
+        const categories = ref([
+          { title: 'Football', image: './src/football.jpg' },
+          { title: 'Rugby', image: './src/rugby.jpg' },
+          { title: 'Other Sports', image: './src/other.jpg' },
+        ]);
+
+        const products = ref([
+          { id: 1, name: 'Eco-Dry Tech Tee', category: 'Men\'s Tops', price: 45, image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80', tag: 'New', tagColor: 'green' },
+          { id: 2, name: 'Velocity Runner Shorts', category: 'Men\'s Bottoms', price: 55, image: 'https://images.unsplash.com/photo-1565299999261-28ba859019bb?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80', tag: null, tagColor: '' },
+          { id: 3, name: 'Aura Flex Leggings', category: 'Women\'s Bottoms', price: 78, image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80', tag: 'Best Seller', tagColor: 'orange' },
+          { id: 4, name: 'Storm Shell Jacket', category: 'Outerwear', price: 120, image: 'https://images.unsplash.com/photo-1554631221-f9603e6808ba?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80', tag: 'Sale', tagColor: 'red' }
+        ]);
+
+        const handleScroll = () => {
+          scrolled.value = window.scrollY > 50;
+        };
+
+        const subscribe = () => {
+          if (email.value) {
+            snackbarText.value = `Welcome to the team! Subscribed with ${email.value}`;
+            snackbarColor.value = 'success';
+            snackbar.value = true;
+            email.value = '';
+          } else {
+            snackbarText.value = 'Please enter a valid email.';
+            snackbarColor.value = 'error';
+            snackbar.value = true;
+          }
+        };
+
+        onMounted(() => {
+          window.addEventListener('scroll', handleScroll);
+        });
+
+        onUnmounted(() => {
+          window.removeEventListener('scroll', handleScroll);
+        });
+
+        return {
+          drawer,
+          scrolled,
+          categories,
+          products,
+          email,
+          subscribe,
+          snackbar,
+          snackbarText,
+          snackbarColor
+        };
+      }
+    });
+
+    app.use(vuetify).mount('#app');
+  </script>
+</body>
+
+</html>
